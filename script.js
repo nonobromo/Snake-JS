@@ -9,20 +9,24 @@ let appleIndex;
 let isGameRunning;
 let intervalTime = 300;
 let score = 0;
+let highScore;
+let currentGameScore = 0;
 
 const buttonsArea = document.querySelector(".buttons");
 const btnStart = document.querySelector("#start-btn");
 const contBtn = document.querySelector("#cont-game");
 const stopBtn = document.querySelector("#stop-snake");
 const resetBtn = document.querySelector("#reset-game");
-const scoreText = document.querySelector("b");
+const scoreText = document.querySelector(".score-area");
+const currentScore = document.querySelector("#update-score");
+const currentHighScore = document.querySelector("#high-score");
 const phoneControls = document.querySelector(".controls");
 
 btnStart.addEventListener("click", function () {
     board.style.display = "inline-grid";
     createBoard();
     btnStart.style.display = "none"
-    scoreText.style.display = "block"
+    scoreText.style.display = "flex"
 })
 
 function createBoard() {
@@ -41,8 +45,6 @@ function createBoard() {
     isGameRunning = true;
 }
 
-
-
 function color() {
     divs.forEach(div => {
         div.classList.remove("snake");
@@ -55,7 +57,6 @@ function color() {
 
 function move(dir) {
     let head = snake[0];
-
 
     if (!isGameRunning) {
         return;
@@ -107,12 +108,10 @@ function move(dir) {
             head--;
         }
     }
-
     if (snake.includes(head)) {
         gameover();
         return;
     }
-
     direction = dir;
     snake.unshift(head);
     snake.pop();
@@ -127,12 +126,22 @@ function createApple() {
 
 function eatApple() {
     if (divs[snake[0]].classList.contains("apple")) {
+        score++;
         setspeed();
         divs[snake[0]].classList.remove("apple");
         snake.push(appleIndex);
         createApple();
-        score++;
-        scoreText.textContent = `score: ${score}`
+        updateScore();
+    }
+}
+
+function updateScore() {
+    currentScore.textContent = `Score: ${score}`;
+
+    if (highScore >= score) {
+        return;
+    } else {
+        currentHighScore.textContent = `High Score: ${score}`;
     }
 }
 
@@ -147,10 +156,18 @@ function setspeed() {
     }
 }
 
+const gameAlert = document.querySelector(".game-alert");
+
 function gameover() {
     clearInterval(interval)
-    alert("gameover")
+    setTimeout(() => {
+        gameAlert.style.transform = "translateY(0px)";
+        gameAlert.style.transition = "400ms"
+        gameAlert.innerHTML = "Game Over, Click Restart to Try Again";
+    },)
+    direction = "";
     isGameRunning = false;
+    highScore = score;
 }
 
 function moveButton(btn) {
@@ -169,7 +186,6 @@ function resetGame() {
     divs.forEach(div => {
         div.classList.remove("apple");
     });
-
     snake.splice(0, snake.length);
     direction = "left";
     snake.push(9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
@@ -179,7 +195,11 @@ function resetGame() {
     color();
     createApple();
     score = 0;
-    scoreText.textContent = `Score : ${score}`;
+    currentScore.textContent = `Score: ${score}`;
+    setTimeout(() => {
+        gameAlert.style.transform = "translateY(-40px)";
+        gameAlert.style.transition = "400ms"
+    },)
 }
 
 window.addEventListener("keydown", ev => {
@@ -200,7 +220,6 @@ window.addEventListener("keydown", ev => {
             break;
     }
 });
-
 
 const arrowUp = document.getElementById("arrow-up");
 const arrowright = document.getElementById("arrow-right");

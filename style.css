@@ -47,7 +47,7 @@ h1 {
 }
 
 .apple::after {
-    content: "🍉";
+    content: "🍎";
     font-size: 16px;
 }
 
@@ -62,10 +62,14 @@ h1 {
     margin: auto;
     margin-top: 40px;
     width: 400px;
+    height: 50px;
+    display: none;
+    flex-direction: column;
+
 }
 
 b {
-    display: none;
+    display: block;
 }
 
 .buttons {
@@ -144,7 +148,24 @@ b {
     margin: auto;
 }
 
+.game-alert {
+    position: absolute;
+    left: 0;
+    right: 0;
+    transform: translateY(-20px);
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+
 @media screen and (max-width:1300px) {
+    body {
+        overflow-x: hidden;
+    }
+
     .score-area {
         margin-top: 10px;
         width: 200px;
@@ -160,6 +181,10 @@ b {
     }
 
     .controls {
+        width: 300px;
+    }
+
+    .instructions {
         width: 300px;
     }
 
