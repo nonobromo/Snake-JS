@@ -155,7 +155,6 @@ function setspeed() {
         intervalTime -= 10;
         clearInterval(interval);
         interval = setInterval(() => move(direction), intervalTime);
-        console.log(intervalTime);
     }
 }
 
