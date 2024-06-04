@@ -119,9 +119,12 @@ function move(dir) {
     eatApple();
 }
 
-function createApple() {
-    appleIndex = Math.floor(Math.random() * divs.length);
-    divs[appleIndex].classList.add("apple");
+function setApple() {
+    do {
+        random = Math.floor(Math.random() * width * height);
+    } while (snake.includes(random))
+    divs.forEach(d => d.classList.remove('apple'));
+    divs[random].classList.add("apple");
 }
 
 function eatApple() {
