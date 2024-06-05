@@ -40,7 +40,7 @@ function createBoard() {
         divs.push(div);
     }
     color();
-    createApple();
+    setApple()
     interval = setInterval(() => move(direction), intervalTime);
     isGameRunning = true;
 }
@@ -133,7 +133,7 @@ function eatApple() {
         setspeed();
         divs[snake[0]].classList.remove("apple");
         snake.push(appleIndex);
-        createApple();
+        setApple()
         updateScore();
     }
 }
@@ -195,7 +195,7 @@ function resetGame() {
     intervalTime = 300;
     interval = setInterval(() => move(direction), intervalTime);
     color();
-    createApple();
+    setApple()
     score = 0;
     currentScore.textContent = `Score: ${score}`;
     setTimeout(() => {
